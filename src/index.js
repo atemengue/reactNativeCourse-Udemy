@@ -11,15 +11,21 @@ class App extends Component {
       err => this.setState({ errorMessage: err.message })
     );
   }
+
+
+  renderCOntent() {
+    if (this.state.lat && !this.state.errorMessage) {
+      return <SeasonDisplay lat={this.state.lat} />
+    }
+    
+    if( !this.state.lat && this.state.errorMessage){
+      return <div>Latitude: {this.state.errorMessage}</div>
+    } 
+    return <Spinner message="Please accept location request"/>
+  }
   
   render() {
-    if( this.state.lat && !this.state.errorMessage) 
-    return <SeasonDisplay lat={this.state.lat} />
-    
-    if( !this.state.lat && this.state.errorMessage) 
-    return <div>Latitude: {this.state.errorMessage}</div>
-
-    return <Spinner />
+    return  <div className="border red">{this.renderCOntent()}</div>
   }
 }
 
